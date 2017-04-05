@@ -155,6 +155,20 @@ namespace StudentsSurveySystem.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    var db = new ApplicationDbContext();
+                    var student = new Student
+                    {
+                        FNumber = "136518",
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        Specialty = 1,
+                        Gender = 1,                 
+                        Age = 22,
+                        ApplicationUserId = user.Id
+                    };
+                    db.Students.Add(student);
+                    db.SaveChanges();
+
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
