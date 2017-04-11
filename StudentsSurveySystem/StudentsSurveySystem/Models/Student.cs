@@ -6,10 +6,20 @@ using System.Web;
 
 namespace StudentsSurveySystem.Models
 {
-    public class Student
+    public enum Specialty
+    {
+        ComputerScience, ComputerSystemsAndTechnologies, Pedagogy
+    }
+
+    public enum Gender
+    {
+        Male, Female
+    }
+
+    public class Student 
     {
         [Key]
-        public int Id { get; set; }
+        public int ID { get; set; }
 
         [Required]
         [StringLength(6, MinimumLength = 6, ErrorMessage = "The faculty number must be 6 digits long")]
@@ -32,14 +42,14 @@ namespace StudentsSurveySystem.Models
             }
         }
 
-        public int Specialty { get; set; } //Enum
+        public Specialty? Specialty { get; set; } 
         public int Age { get; set; }
-        public int Gender { get; set; } //Enum
-        //Here List of Surveys
+        public Gender? Gender { get; set; }
 
-        public virtual ApplicationUser User { get; set; }
+        public virtual ICollection<Enrollment> Enrollments { get; set; }
 
-        [Required]
-        public string ApplicationUserId { get; set; }
+        //public virtual ApplicationUser User { get; set; }
+        //[Required]
+        //public string ApplicationUserId { get; set; }
     }
 }

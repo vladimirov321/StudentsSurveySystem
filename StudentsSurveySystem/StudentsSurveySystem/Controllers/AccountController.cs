@@ -152,19 +152,20 @@ namespace StudentsSurveySystem.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     var db = new ApplicationDbContext();
                     var student = new Student
                     {
-                        FNumber = "136518",
+                        FNumber = model.FNumber,
                         FirstName = model.FirstName,
                         LastName = model.LastName,
-                        Specialty = 1,
-                        Gender = 1,                 
-                        Age = 22,
-                        ApplicationUserId = user.Id
+                        Specialty = model.Specialty,
+                        Gender = model.Gender,                 
+                        Age = model.Age,
+                        //ApplicationUserId = user.Id
                     };
                     db.Students.Add(student);
                     db.SaveChanges();

@@ -72,6 +72,17 @@ namespace StudentsSurveySystem.Models
         [Display(Name = "Last name")]
         public string LastName { get; set; }
 
+        //Added properties to the ViewModel
+        [Required]
+        [StringLength(6, MinimumLength = 6, ErrorMessage = "The faculty number must be 6 digits long")]
+        [Display(Name = "Faculty number")]
+        public string FNumber { get; set; }
+
+        public Specialty? Specialty { get; set; }
+        public int Age { get; set; }
+        public Gender? Gender { get; set; }
+        //
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]

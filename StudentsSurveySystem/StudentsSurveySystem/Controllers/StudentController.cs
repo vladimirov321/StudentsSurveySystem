@@ -24,9 +24,9 @@ namespace StudentsSurveySystem.Controllers
                 FirstName = "Vladimir",
                 LastName = "Vladimirov"
                 ,
-                Specialty = 1,
+                Specialty = Specialty.ComputerScience,
                 Age = 22,
-                Gender = 0
+                Gender = Gender.Male
             };
 
             return View(student);
