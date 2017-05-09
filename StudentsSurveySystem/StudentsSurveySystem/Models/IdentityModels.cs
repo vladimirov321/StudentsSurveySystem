@@ -35,5 +35,9 @@ namespace StudentsSurveySystem.Models
         public DbSet<Survey> Surveys { get; set; }
 
         public DbSet<Enrollment> Enrollments { get; set; }
+
+        public DbSet<Question> Questions { get; set; }
+
+        public DbSet<Answer> Answers { get; set; }
     }
 }

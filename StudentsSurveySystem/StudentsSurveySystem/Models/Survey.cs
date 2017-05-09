@@ -8,20 +8,9 @@ namespace StudentsSurveySystem.Models
     public class Survey
     {
         public int ID { get; set; }
-        public int Caregory { get; set; } //Enum
+        public int Category { get; set; } // 1 - Оценка на преподаватели; 2 - Качество на учебния процес; 3 - Условия за професионална реализация; 4 - Оценка за престижа на университета сред студентите  
 
-        //Answers
-        public int Answer1 { get; set; } //Enum
-        public int Answer2 { get; set; } //Enum
-        public int Answer3 { get; set; } //Enum
-        public int Answer4 { get; set; } //Enum
-        public int Answer5 { get; set; } //Enum
-        public int Answer6 { get; set; } //Enum
-        public int Answer7 { get; set; } //Enum
-        public int Answer8 { get; set; } //Enum
-        public int Answer9 { get; set; } //Enum
-        public int Answer10 { get; set; } //Enum
-
+        public ICollection<Question> Questions { get; set; }
         public virtual ICollection<Enrollment> Enrollments { get; set; }
     }
 }
