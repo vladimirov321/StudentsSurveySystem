@@ -1,0 +1,11 @@
+﻿@model IEnumerable<StudentsSurveySystem.Models.Question>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>@ViewBag.SurveyName</h2>
+@foreach (var item in Model)
+{
+    <p>@Html.DisplayFor(modelItem => item.Content)</p>
+}

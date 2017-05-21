@@ -1,0 +1,11 @@
+﻿@model IEnumerable<StudentsSurveySystem.Models.Survey>
+@{
+    ViewBag.Title = "Category3";
+}
+
+<h2>Оценка за престижа на университета сред студентите</h2>
+@foreach (var item in Model)
+{
+    <p><a href="@Url.Action("Index", "Questions", new { id = item.ID })">@Html.DisplayFor(modelItem => item.Name)</a></p>
+}
+

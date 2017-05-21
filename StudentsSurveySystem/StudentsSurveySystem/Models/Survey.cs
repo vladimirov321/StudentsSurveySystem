@@ -8,8 +8,11 @@ namespace StudentsSurveySystem.Models
     public class Survey
     {
         public int ID { get; set; }
-        public int Category { get; set; } // 1 - Оценка на преподаватели; 2 - Качество на учебния процес; 3 - Условия за професионална реализация; 4 - Оценка за престижа на университета сред студентите  
+        //public int Category { get; set; } // 1 - Оценка на преподаватели; 2 - Качество на учебния процес; 3 - Условия за професионална реализация; 4 - Оценка за престижа на университета сред студентите  
+        public string Name { get; set; }
+        public int CategoryID { get; set; }
 
+        public virtual Category Category { get; set; }
         public ICollection<Question> Questions { get; set; }
         public virtual ICollection<Enrollment> Enrollments { get; set; }
     }

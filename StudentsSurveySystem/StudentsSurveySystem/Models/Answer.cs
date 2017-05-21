@@ -18,5 +18,8 @@ namespace StudentsSurveySystem.Models
             public int StudentAge { get; set; }
             public Gender? StudentGender { get; set; }
             public int YearOfStudy { get; set; }
+            public int QuestionID { get; set; }
+
+            public virtual Question Question { get; set; }
     }
 }
