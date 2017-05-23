@@ -14,6 +14,8 @@ namespace StudentsSurveySystem.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        // GET: Questions
+        [HttpGet]
         public ActionResult Index(int? id)
         {
             if (id == null)
@@ -26,17 +28,20 @@ namespace StudentsSurveySystem.Controllers
                 return HttpNotFound();
             }
             var questions = db.Questions.Include(q => q.Survey).Where(s => s.SurveyID == id);
+
             ViewBag.SurveyName = survey.Name;
             return View(questions.ToList());
         }
 
-        // GET: Questions
-        //public ActionResult Index()
-        //{
-        //    var questions = db.Questions.Include(q => q.Survey);
-        //    return View(questions.ToList());
-        //}
-
+        [HttpPost]
+        public ActionResult Index()
+        {
+            string data = new System.IO.StreamReader(Request.InputStream).ReadToEnd();
+            var pairs = data.Split('&');
+            string currentUserId = User.Identity.Name;
+            ApplicationUser currentUser = db.Users.FirstOrDefault(x => x.UserName == currentUserId);
+            return View();
+        }
         // GET: Questions/Details/5
         public ActionResult Details(int? id)
         {

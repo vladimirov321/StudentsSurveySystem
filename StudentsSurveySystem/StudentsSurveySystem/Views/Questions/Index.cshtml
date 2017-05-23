@@ -5,7 +5,60 @@
 }
 
 <h2>@ViewBag.SurveyName</h2>
+@using (Html.BeginForm("Index", "Questions", new {  }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Въпрос</th>
+                <th>1</th>
+                <th>2</th>
+                <th>3</th>
+                <th>4</th>
+                <th>5</th>
+            </tr>
+        </thead>
+        <tbody>
 @foreach (var item in Model)
 {
-    <p>@Html.DisplayFor(modelItem => item.Content)</p>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Content)
+                </td>
+                    <td>
+                           <input checked="checked"
+                           id="ChosenAnswer"
+                           name="@item.ID"
+                           type="radio"
+                           value="A" />
+                    </td>
+                    <td>
+                        <input id="ChosenAnswer"
+                               name="@item.ID"
+                               type="radio"
+                               value="B" />
+                    </td>
+                    <td>
+                        <input id="ChosenAnswer"
+                               name="@item.ID"
+                               type="radio"
+                               value="C" />
+                    </td>
+                    <td>
+                        <input id="ChosenAnswer"
+                               name="@item.ID"
+                               type="radio"
+                               value="D" />
+                    </td>
+                    <td>
+                        <input id="ChosenAnswer"
+                               name="@item.ID"
+                               type="radio"
+                               value="E" />
+                    </td>       
+            </tr>           
+}
+        </tbody>
+    </table>
+    <input type="submit" value="Изпрати" class="btn btn-default"/>
 }
