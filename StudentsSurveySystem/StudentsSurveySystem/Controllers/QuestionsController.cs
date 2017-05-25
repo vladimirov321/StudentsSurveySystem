@@ -40,15 +40,25 @@ namespace StudentsSurveySystem.Controllers
 
             string currentUserEmail = User.Identity.Name;
             Student currentStudent = db.Students.FirstOrDefault(x => x.Email == currentUserEmail);
-            
-            if(db.Enrollments.Any(x => x.SurveyID == id && x.StudentID == currentStudent.ID))
-            {
-                ViewBag.CanEnroll = false;
-            }
-            else
+
+            //Checks for Admin role
+            bool currentUserRoleIsAdmin = User.IsInRole("Admin");
+            if(currentUserRoleIsAdmin)
             {
                 ViewBag.CanEnroll = true;
             }
+            else
+            {
+                if (db.Enrollments.Any(x => x.SurveyID == id && x.StudentID == currentStudent.ID))
+                {
+                    ViewBag.CanEnroll = false;
+                }
+                else
+                {
+                    ViewBag.CanEnroll = true;
+                }
+            }
+            
             return View(questions.ToList());
         }
 
@@ -94,19 +104,12 @@ namespace StudentsSurveySystem.Controllers
         }
 
         // GET: Question id frow view
+        [Authorize(Roles = "Admin")]
         public ActionResult Stats(int questionID, int? age, Gender? gender, int? yearOfStudy, Specialty? specialty)
         {
             var question = db.Questions.FirstOrDefault(x => x.ID == questionID);
 
             StatsClass results = new StatsClass { A = 0, B = 0, C = 0, D = 0, E = 0 };
-
-            //var toBeginResults = results;
-
-            //foreach(var answer in question.Answers)
-            //{
-            //    answerSwitcher(answer, toBeginResults);
-            //}
-            //To Do: check if not null...
 
             foreach (var answer in question.Answers)
             {
