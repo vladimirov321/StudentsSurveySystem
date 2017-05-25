@@ -10,6 +10,12 @@ using StudentsSurveySystem.Models;
 
 namespace StudentsSurveySystem.Controllers
 {
+    public class StatsClass
+    {
+        public int A, B, C, D, E;
+    }
+
+    [Authorize]
     public class QuestionsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -30,18 +36,89 @@ namespace StudentsSurveySystem.Controllers
             var questions = db.Questions.Include(q => q.Survey).Where(s => s.SurveyID == id);
 
             ViewBag.SurveyName = survey.Name;
+            ViewBag.SurveyID = survey.ID;
+
+            string currentUserEmail = User.Identity.Name;
+            Student currentStudent = db.Students.FirstOrDefault(x => x.Email == currentUserEmail);
+            
+            if(db.Enrollments.Any(x => x.SurveyID == id && x.StudentID == currentStudent.ID))
+            {
+                ViewBag.CanEnroll = false;
+            }
+            else
+            {
+                ViewBag.CanEnroll = true;
+            }
             return View(questions.ToList());
         }
 
         [HttpPost]
-        public ActionResult Index()
+        public ActionResult Index(int surveyID)
         {
             string data = new System.IO.StreamReader(Request.InputStream).ReadToEnd();
             var pairs = data.Split('&');
-            string currentUserId = User.Identity.Name;
-            ApplicationUser currentUser = db.Users.FirstOrDefault(x => x.UserName == currentUserId);
+
+            string currentUserEmail = User.Identity.Name;
+            Student currentStudent = db.Students.FirstOrDefault(x => x.Email == currentUserEmail);
+
+            foreach (var pair in pairs)
+            {
+                var secondSplit = pair.Split('=');
+                if (secondSplit[0] == "surveyID")
+                {
+                    continue;
+                }
+
+                var answer = new Answer
+                {
+                    QuestionID = int.Parse(secondSplit[0]),
+                    ChosenAnswer = (ChosenAnswer)Enum.Parse(typeof(ChosenAnswer), secondSplit[1]),
+                    StudentAge = currentStudent.Age,
+                    StudentGender = currentStudent.Gender,
+                    StudentSpecialty = currentStudent.Specialty,
+                    YearOfStudy = DateTime.Now.Year - (int.Parse((currentStudent.FNumber)) / 10000 + 2000)
+                };
+               
+                db.Answers.Add(answer);
+            }
+
+            db.Enrollments.Add(new Enrollment
+            {
+                StudentID = currentStudent.ID,
+                SurveyID = surveyID    
+            });
+            
+            db.SaveChanges();
+
+            return RedirectToAction("Index", "Home");                        
+        }
+
+        // GET: Question id frow view
+        public ActionResult Stats(int questionID, int? age, Gender? gender, int? yearOfStudy, Specialty? specialty)
+        {
+            var question = db.Questions.FirstOrDefault(x => x.ID == questionID);
+
+            StatsClass results = new StatsClass { A = 0, B = 0, C = 0, D = 0, E = 0 };
+
+            //var toBeginResults = results;
+
+            //foreach(var answer in question.Answers)
+            //{
+            //    answerSwitcher(answer, toBeginResults);
+            //}
+            //To Do: check if not null...
+
+            foreach (var answer in question.Answers)
+            {
+                checkForResult(answer, results, age, gender, yearOfStudy, specialty);
+            }
+            
+            ViewBag.Stats = results;
+            ViewBag.QuestionID = questionID;
             return View();
         }
+
+
         // GET: Questions/Details/5
         public ActionResult Details(int? id)
         {
@@ -148,6 +225,93 @@ namespace StudentsSurveySystem.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        //Additional Methods
+        public void answerSwitcher(Answer a, StatsClass results)
+        {
+            switch (a.ChosenAnswer)
+            {
+                case ChosenAnswer.A:
+                    results.A++;
+                    break;
+                case ChosenAnswer.B:
+                    results.B++;
+                    break;
+                case ChosenAnswer.C:
+                    results.C++;
+                    break;
+                case ChosenAnswer.D:
+                    results.D++;
+                    break;
+                case ChosenAnswer.E:
+                    results.E++;
+                    break;
+            }
+        }
+
+        public void checkForResult(Answer answer, StatsClass results, int? age, Gender? gender, int? yearOfStudy, Specialty? specialty)
+        {
+            if(age.HasValue == false && gender.HasValue == false && yearOfStudy.HasValue == false && specialty.HasValue == false)
+            {
+                answerSwitcher(answer, results);
+            }
+            if (age.HasValue && gender.HasValue == false && yearOfStudy.HasValue == false && specialty.HasValue == false)
+            {
+                if (answer.StudentAge == age) answerSwitcher(answer, results);
+            }
+            if (age.HasValue && gender.HasValue && yearOfStudy.HasValue == false && specialty.HasValue == false)
+            {
+                if (answer.StudentAge == age && answer.StudentGender == gender) answerSwitcher(answer, results);
+            }
+            if (age.HasValue && gender.HasValue && yearOfStudy.HasValue && specialty.HasValue == false)
+            {
+                if (answer.StudentAge == age && answer.StudentGender == gender && answer.YearOfStudy == yearOfStudy) answerSwitcher(answer, results);
+            }
+            if (age.HasValue && gender.HasValue && yearOfStudy.HasValue && specialty.HasValue)
+            {
+                if (answer.StudentAge == age && answer.StudentGender == gender && answer.YearOfStudy == yearOfStudy && answer.StudentSpecialty == specialty) answerSwitcher(answer, results);
+            }
+            if (age.HasValue && gender.HasValue == false && yearOfStudy.HasValue && specialty.HasValue == false)
+            {
+                if(answer.StudentAge == age && answer.YearOfStudy == yearOfStudy) answerSwitcher(answer, results);
+            }
+            if (age.HasValue && gender.HasValue == false && yearOfStudy.HasValue && specialty.HasValue)
+            {
+                if (answer.StudentAge == age && answer.YearOfStudy == yearOfStudy && answer.StudentSpecialty == specialty) answerSwitcher(answer, results);
+            }
+            if (age.HasValue && gender.HasValue == false && yearOfStudy.HasValue == false && specialty.HasValue)
+            {
+                if (answer.StudentAge == age  && answer.StudentSpecialty == specialty) answerSwitcher(answer, results);
+            }
+            if (age.HasValue == false && gender.HasValue && yearOfStudy.HasValue == false && specialty.HasValue == false)
+            {
+                if (answer.StudentGender == gender) answerSwitcher(answer, results);
+            }
+            if (age.HasValue == false && gender.HasValue && yearOfStudy.HasValue && specialty.HasValue == false)
+            {
+                if (answer.StudentGender == gender && answer.YearOfStudy == yearOfStudy) answerSwitcher(answer, results);
+            }
+            if (age.HasValue == false && gender.HasValue && yearOfStudy.HasValue && specialty.HasValue)
+            {
+                if (answer.StudentGender == gender && answer.YearOfStudy == yearOfStudy && answer.StudentSpecialty == specialty) answerSwitcher(answer, results);
+            }
+            if (age.HasValue == false && gender.HasValue && yearOfStudy.HasValue == false && specialty.HasValue)
+            {
+                if (answer.StudentGender == gender && answer.StudentSpecialty == specialty) answerSwitcher(answer, results);
+            }
+            if (age.HasValue == false && gender.HasValue == false && yearOfStudy.HasValue && specialty.HasValue == false)
+            {
+                if (answer.YearOfStudy == yearOfStudy) answerSwitcher(answer, results);
+            }
+            if (age.HasValue == false && gender.HasValue == false && yearOfStudy.HasValue && specialty.HasValue)
+            {
+                if (answer.YearOfStudy == yearOfStudy && answer.StudentSpecialty == specialty) answerSwitcher(answer, results);
+            }
+            if (age.HasValue == false && gender.HasValue == false && yearOfStudy.HasValue == false && specialty.HasValue)
+            {
+                if (answer.StudentSpecialty == specialty) answerSwitcher(answer, results);
+            }
         }
     }
 }

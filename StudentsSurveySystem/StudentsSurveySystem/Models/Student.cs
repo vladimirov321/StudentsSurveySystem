@@ -8,12 +8,20 @@ namespace StudentsSurveySystem.Models
 {
     public enum Specialty
     {
-        ComputerScience, ComputerSystemsAndTechnologies, Pedagogy
+        [Display(Name = "Компютърни науки")]
+        ComputerScience,
+        [Display(Name = "Компютърни системи и технологии")]
+        ComputerSystemsAndTechnologies,
+        [Display(Name ="Педагогика")]
+        Pedagogy
     }
 
     public enum Gender
     {
-        Male, Female
+        [Display(Name = "Мъж")]
+        Male,
+        [Display(Name = "Жена")]
+        Female
     }
 
     public class Student 
@@ -33,6 +41,10 @@ namespace StudentsSurveySystem.Models
         [Required]
         [Display(Name = "Last name")]
         public string LastName { get; set; }
+
+        [Required]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
 
         public string Name
         {

@@ -12,6 +12,6 @@ namespace StudentsSurveySystem.Models
         public int SurveyID { get; set; }
 
         public virtual Survey Survey { get; set; }
-        public ICollection<Answer> Answers { get; set; }
+        public virtual ICollection<Answer> Answers { get; set; }
     }
 }

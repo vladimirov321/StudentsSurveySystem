@@ -165,6 +165,7 @@ namespace StudentsSurveySystem.Controllers
                         Specialty = model.Specialty,
                         Gender = model.Gender,                 
                         Age = model.Age,
+                        Email = model.Email
                         //ApplicationUserId = user.Id
                     };
                     db.Students.Add(student);

@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "Stats";
+}
+
+
+
+<h3>Филтриране по:</h3>
+@using (Html.BeginForm("Stats", "Questions", new { }, FormMethod.Get, new { @class = "form-horizontal", role = "form" }))
+{
+    <input type="hidden" name="questionID" value="@ViewBag.QuestionID" />
+    <p>Възраст</p> <input type="number" name="age" />
+    <p>Пол</p> <label>Мъж</label><input type="radio" name="gender" value="0"/> <label>Жена</label><input type="radio" name="gender" value="1"/>
+    <p>Година на обучение</p> <input type="number" name="yearOfStudy" />
+    <p>Специалност</p> <select name="specialty"><option selected disabled>Изберете специалност</option><option value="0">Компютърни науки</option><option value="1">Компютърни системи и технологии</option><option value="2">Педагогика</option></select>
+
+    <input type="submit" class="btn btn-default" />
+
+
+    //if (ViewBag.HasResult == true)
+    if(true)
+    {
+        <h2>Stats</h2>
+        <p>@ViewBag.Stats.A</p>
+        <p>@ViewBag.Stats.B</p>
+        <p>@ViewBag.Stats.C</p>
+        <p>@ViewBag.Stats.D</p>
+        <p>@ViewBag.Stats.E</p>
+    }
+}
+
+
