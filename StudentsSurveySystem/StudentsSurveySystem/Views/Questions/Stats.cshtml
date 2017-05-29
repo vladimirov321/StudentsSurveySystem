@@ -2,7 +2,61 @@
     ViewBag.Title = "Stats";
 }
 
+<style>
+    #chart {
+    height: 300px;
+}
+</style>
 
+@section Scripts
+{
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/globalize/0.1.1/globalize.min.js"></script>
+<script type="text/javascript" src="http://cdn3.devexpress.com/jslib/14.1.13/js/dx.chartjs.js"></script>
+    <script>
+        var statsData = [{
+            arg: 'A',
+            val: parseInt(@ViewBag.Stats.A),
+            fillColor: '#000000'
+        }, {
+            arg: 'B',
+            val: parseInt(@ViewBag.Stats.B),
+        }, {
+            arg: 'C',
+            val: parseInt(@ViewBag.Stats.C),
+        }, {
+            arg: 'D',
+            val: parseInt(@ViewBag.Stats.D),
+        }, {
+            arg: 'E',
+            val: parseInt(@ViewBag.Stats.E),
+        }];
+    $(document).ready(function ()
+    {
+        $("#chart").dxChart({
+            dataSource: statsData,
+            options: {
+                scales: {
+                    yAxеs: [{
+                        ticks: {
+                            beginAtZero: true,
+                            callback: function (value) { if (value % 1 === 0) { return value; } }
+                        }
+                    }]
+                }
+            },
+            series: {
+                argumentField: "arg",
+                valueField: "val",
+                name: "Брой отговорили студенти",
+                type: "bar",
+                color: '#ffaa66'
+            },
+            title: "Брой отговорили студенти"
+        });
+    }
+        );
+</script>
+}
 
 <h3>Филтриране по:</h3>
 @using (Html.BeginForm("Stats", "Questions", new { }, FormMethod.Get, new { @class = "form-horizontal", role = "form" }))
@@ -17,7 +71,7 @@
 
 
     //if (ViewBag.HasResult == true)
-    if(true)
+    @*if(true)
     {
         <h2>Stats</h2>
         <p>@ViewBag.Stats.A</p>
@@ -25,7 +79,11 @@
         <p>@ViewBag.Stats.C</p>
         <p>@ViewBag.Stats.D</p>
         <p>@ViewBag.Stats.E</p>
-    }
+    }*@
 }
+<div class="container">
+    <div id="chart"></div>
+</div>
+
 
 

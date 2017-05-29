@@ -88,6 +88,8 @@ namespace StudentsSurveySystem.Controllers
                     StudentSpecialty = currentStudent.Specialty,
                     YearOfStudy = DateTime.Now.Year - (int.Parse((currentStudent.FNumber)) / 10000 + 2000)
                 };
+                DateTime dateForCheck = new DateTime(DateTime.Now.Year, 9, 15);
+                if (dateForCheck.Month <= DateTime.Now.Month) answer.YearOfStudy++;
                
                 db.Answers.Add(answer);
             }
