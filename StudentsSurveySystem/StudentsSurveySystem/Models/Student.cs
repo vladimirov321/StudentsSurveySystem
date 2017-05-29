@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace StudentsSurveySystem.Models
 {
@@ -32,6 +33,8 @@ namespace StudentsSurveySystem.Models
         [Required]
         [StringLength(6, MinimumLength = 6, ErrorMessage = "The faculty number must be 6 digits long")]
         [Display(Name = "Faculty number")]
+        [Remote("IsStudentFNumberExist", "Student", AdditionalFields = "Id",
+                ErrorMessage = "FNumber already exists")]
         public string FNumber { get; set; }
 
         [Required]

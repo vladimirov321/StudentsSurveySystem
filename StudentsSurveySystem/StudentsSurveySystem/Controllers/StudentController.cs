@@ -97,5 +97,20 @@ namespace StudentsSurveySystem.Controllers
                 return View();
             }
         }
+
+        public JsonResult IsStudentFNumberExist(string FNumber, int? Id)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            var validateName = db.Students.FirstOrDefault
+                                (x => x.FNumber == FNumber && x.ID != Id);
+            if (validateName != null)
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }
