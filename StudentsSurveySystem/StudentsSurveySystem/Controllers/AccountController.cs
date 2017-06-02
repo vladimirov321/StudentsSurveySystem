@@ -175,7 +175,7 @@ namespace StudentsSurveySystem.Controllers
                 (x => x.FNumber == model.FNumber);
             if (IsStudentFNumberExist == true)
             {
-                ModelState.AddModelError("ProductName", "This Faculty Number Already exists");
+                ModelState.AddModelError("FNumber", "Този факултетен номер вече е регистриран");
             }
             else
             {

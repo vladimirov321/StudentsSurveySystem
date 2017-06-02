@@ -54,6 +54,19 @@ namespace StudentsSurveySystem.Controllers
         // GET: /Manage/Index
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
+            if(User.Identity.Name == "admin")
+            {
+                ViewBag.StudentEmail = "admin@system.com";
+                ViewBag.StudentName = "admin";
+            }
+            else
+            {
+                var db = new ApplicationDbContext();
+                Student currentStudent = db.Students.FirstOrDefault(x => x.Email == User.Identity.Name);
+                ViewBag.StudentName = currentStudent.Name;
+                ViewBag.StudentEmail = User.Identity.Name;
+            }
+             
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
                 : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."

@@ -5,8 +5,8 @@ namespace StudentsSurveySystem.Models
 {
     public class ExternalLoginConfirmationViewModel
     {
-        [Required]
-        [Display(Name = "Email")]
+        [Required(ErrorMessage = "Полето {0} e задължително")]
+        [Display(Name = "Имейл")]
         public string Email { get; set; }
     }
 
@@ -25,15 +25,15 @@ namespace StudentsSurveySystem.Models
 
     public class VerifyCodeViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Полето {0} e задължително")]
         public string Provider { get; set; }
 
-        [Required]
-        [Display(Name = "Code")]
+        [Required(ErrorMessage = "Полето {0} e задължително")]
+        [Display(Name = "Код")]
         public string Code { get; set; }
         public string ReturnUrl { get; set; }
 
-        [Display(Name = "Remember this browser?")]
+        [Display(Name = "Запомни този браузър?")]
         public bool RememberBrowser { get; set; }
 
         public bool RememberMe { get; set; }
@@ -41,81 +41,89 @@ namespace StudentsSurveySystem.Models
 
     public class ForgotViewModel
     {
-        [Required]
-        [Display(Name = "Email")]
+        [Required(ErrorMessage = "Полето {0} e задължително")]
+        [Display(Name = "Имейл")]
         public string Email { get; set; }
     }
 
     public class LoginViewModel
     {
-        [Required]
-        [Display(Name = "Email")]
+        [Required(ErrorMessage = "Полето {0} e задължително")]
+        [Display(Name = "Имейл")]
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Полето {0} e задължително")]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Парола")]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "Запомни ме?")]
         public bool RememberMe { get; set; }
     }
 
     public class RegisterViewModel
     {
-        [Required]
-        [Display(Name = "First name")]
+        [Required(ErrorMessage = "Полето {0} e задължително")]
+        [Display(Name = "Име")]
         public string FirstName { get; set; }
 
-        [Required]
-        [Display(Name = "Last name")]
+        [Required(ErrorMessage = "Полето {0} e задължително")]
+        [Display(Name = "Фамилия")]
         public string LastName { get; set; }
 
         //Added properties to the ViewModel
-        [Required]
-        [StringLength(6, MinimumLength = 6, ErrorMessage = "The faculty number must be 6 digits long")]
-        [Display(Name = "Faculty number")]
+        [Required(ErrorMessage = "Полето {0} e задължително")]
+        [StringLength(6, MinimumLength = 6, ErrorMessage = "Факултетният номер трябва да се състои от точно 6 цифри")]
+        [Display(Name = "Факултетен номер")]
         public string FNumber { get; set; }
 
+        [Required(ErrorMessage = "Полето {0} e задължително")]
+        [Display(Name = "Специалност")]
         public Specialty? Specialty { get; set; }
+
+        [Required(ErrorMessage = "Полето {0} e задължително")]
+        [Display(Name = "Възраст")]
         public int Age { get; set; }
+
+        [Required(ErrorMessage = "Полето {0} e задължително")]
+        [Display(Name = "Пол")]
         public Gender? Gender { get; set; }
         //
 
-        [Required]
+        [Required(ErrorMessage = "Полето {0} e задължително")]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "Имейл")]
         public string Email { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [Required(ErrorMessage = "Полето {0} e задължително")]
+        [StringLength(100, ErrorMessage = "Паролата тръбва да бъде поне {2} символа.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Парола")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "Потвърдете паролата")]
+        [Compare("Password", ErrorMessage = "Потвърдената парола не съвпада с паролата.")] 
         public string ConfirmPassword { get; set; }
     }
 
     public class ResetPasswordViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Полето {0} e задължително")]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "Имейл")]
         public string Email { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [Required(ErrorMessage = "Полето {0} e задължително")]
+        [StringLength(100, ErrorMessage = "Паролата тръбва да бъде поне {2} символа.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Парола")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "Потвърдете паролата")]
+        [Compare("Password", ErrorMessage = "Потвърдената парола не съвпада с паролата.")]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }
@@ -123,9 +131,9 @@ namespace StudentsSurveySystem.Models
 
     public class ForgotPasswordViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Полето {0} e задължително")]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "Имейл")]
         public string Email { get; set; }
     }
 }

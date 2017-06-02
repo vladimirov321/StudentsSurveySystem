@@ -31,22 +31,22 @@ namespace StudentsSurveySystem.Models
         public int ID { get; set; }
 
         [Required]
-        [StringLength(6, MinimumLength = 6, ErrorMessage = "The faculty number must be 6 digits long")]
-        [Display(Name = "Faculty number")]
+        [StringLength(6, MinimumLength = 6, ErrorMessage = "Факултетният номер трябва да се състои от точно 6 цифри")]
+        [Display(Name = "Факултетен номер")]
         [Remote("IsStudentFNumberExist", "Student", AdditionalFields = "Id",
-                ErrorMessage = "FNumber already exists")]
+                ErrorMessage = "Този факултетен номер вече е регистриран")]
         public string FNumber { get; set; }
 
         [Required]
-        [Display(Name = "First name")]
+        [Display(Name = "Име")]
         public string FirstName { get; set; }
 
         [Required]
-        [Display(Name = "Last name")]
+        [Display(Name = "Фамилия")]
         public string LastName { get; set; }
 
         [Required]
-        [Display(Name = "Email")]
+        [Display(Name = "Имейл")]
         public string Email { get; set; }
 
         public string Name

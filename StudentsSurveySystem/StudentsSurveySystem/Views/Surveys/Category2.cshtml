@@ -3,8 +3,27 @@
     ViewBag.Title = "Category2";
 }
 
+<style>
+    .mypanel:hover{
+        background-color: azure;
+        box-shadow: 5px 5px #D3D3D3;
+    }
+
+</style>
+
 <h2>Оценка на качеството на учебния процес</h2>
 @foreach (var item in Model)
 {
-    <p><a href="@Url.Action("Index", "Questions", new { id = item.ID })">@Html.DisplayFor(modelItem => item.Name)</a></p>
+    <a href="@Url.Action("Index", "Questions", new { id = item.ID })">
+        <div class="col-md-3">
+            <div class="panel panel-primary mypanel">
+                <div class="panel-heading">
+                    <h4>@Html.DisplayFor(modelItem => item.Name)</h4>
+                </div>
+                <div class="panel-body">
+                    <h5>Попълни тази анкета сега</h5>
+                </div>
+            </div>
+        </div>
+    </a>
 }

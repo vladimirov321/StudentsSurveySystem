@@ -4,29 +4,48 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
+    <style>
+    
+    .dropdown-menu {
+        opacity: 0.85 !important;
+     }
+    </style>
+    @section Scripts
+    {
+    <script type="text/javascript">
+        $(document).on('scroll', function (e) {
+            $('.navbar').css('opacity', ($(document).scrollTop() / 500));
+            console.log("Hey stranger");
+        });
+    </script>
+    }
+    
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
+
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Добре дошли!", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            <div class="navbar-collapse collapse">
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink(" Home", "Index", "Home", new { area = "" }, new { @class = "glyphicon glyphicon-home" })</li>
+                    <li>@Html.ActionLink(" За нас", "About", "Home", new { area = "" }, new { @class = "glyphicon glyphicon-info-sign" })</li>
+                    <li>@Html.ActionLink(" Контакти", "Contact", "Home", new { area = "" }, new { @class = "glyphicon glyphicon-envelope" })</li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                           aria-expanded="false">Анкети<span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle glyphicon glyphicon-th-list" data-toggle="dropdown" role="button"
+                           aria-expanded="false"> Анкети<span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu" id="myTab">
                             <li role="presentation">
                                 <a href="" aria-controls="" role="tab" data-toggle="tab">
@@ -51,17 +70,18 @@
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+        </nav>
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+            @*<footer>
+                <p>&copy; @DateTime.Now.Year - Студентска система за анкетиране</p>
+            </footer>*@
+        </div>
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
 </body>
 </html>

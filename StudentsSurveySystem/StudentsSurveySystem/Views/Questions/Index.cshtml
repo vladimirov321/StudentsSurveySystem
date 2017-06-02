@@ -3,6 +3,17 @@
 @{
     ViewBag.Title = "Index";
 }
+<style>
+    #sendBtn:hover{
+        background-color: green;
+    }
+    #statsbtn{
+        background-color:white;
+    }
+    #statsbtn:hover{
+        background-color:green;
+    }
+</style>
 
 <h2>@ViewBag.SurveyName</h2>
 @using (Html.BeginForm("Index", "Questions", new {  }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
@@ -26,25 +37,26 @@
         <tbody>
 @foreach (var item in Model)
 {
-            <tr>
+    
+        <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Content)
                 </td>
-                    @if (this.User.IsInRole("Admin") == false)
+                @if (this.User.IsInRole("Admin") == false)
                     {
-                        <td>
-                            <input checked="checked"
-                                   id="ChosenAnswer"
-                                   name="@item.ID"
-                                   type="radio"
-                                   value="A" />
-                        </td>
-                        <td>
-                            <input id="ChosenAnswer"
-                                   name="@item.ID"
-                                   type="radio"
-                                   value="B" />
-                        </td>
+                    <td>
+                        <input checked="checked"
+                               id="ChosenAnswer"
+                               name="@item.ID"
+                               type="radio"
+                               value="A" />
+                    </td>
+                    <td>
+                        <input id="ChosenAnswer"
+                               name="@item.ID"
+                               type="radio"
+                               value="B" />
+                    </td>
                         <td>
                             <input id="ChosenAnswer"
                                    name="@item.ID"
@@ -63,16 +75,17 @@
                                    type="radio"
                                    value="E" />
                         </td>
-                    }
+                }
 
-                    @if (this.User.IsInRole("Admin")) {
-                        <td>
-                            @Html.ActionLink("Stats", "Stats", new { questionID = item.ID})
-                        </td>
-                    }
-            </tr>
-}
-        </tbody>
+                @if (this.User.IsInRole("Admin"))
+                {
+                    <td>
+                        <span class="btn btn-default" id="statsbtn">@Html.ActionLink("Stats", "Stats", new { questionID = item.ID })</span>
+                    </td>
+                }
+</tr>
+        }
+</tbody>
     </table>
 
     if(ViewBag.CanEnroll == false)
@@ -84,7 +97,7 @@
     {
         if (this.User.IsInRole("Admin") == false)
         {
-            <input type="submit" value="Изпрати" class="btn btn-default" onclick="return confirm('Сигурни ли сте, че искате да изпратите тази анкета?');return false;" />
+            <input type="submit" value="Изпрати" class="btn btn-default" id="sendBtn" onclick="return confirm('Сигурни ли сте, че искате да изпратите тази анкета?');return false;" />
         }
     }
 }
