@@ -11,14 +11,7 @@
      }
     </style>
     @section Scripts
-    {
-    <script type="text/javascript">
-        $(document).on('scroll', function (e) {
-            $('.navbar').css('opacity', ($(document).scrollTop() / 500));
-            console.log("Hey stranger");
-        });
-    </script>
-    }
+    { }
     
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
@@ -40,9 +33,7 @@
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink(" Home", "Index", "Home", new { area = "" }, new { @class = "glyphicon glyphicon-home" })</li>
-                    <li>@Html.ActionLink(" За нас", "About", "Home", new { area = "" }, new { @class = "glyphicon glyphicon-info-sign" })</li>
-                    <li>@Html.ActionLink(" Контакти", "Contact", "Home", new { area = "" }, new { @class = "glyphicon glyphicon-envelope" })</li>
+                    <li>@Html.ActionLink(" Home", "Index", "Home", new { area = "" }, new { @class = "glyphicon glyphicon-home" })</li>   
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle glyphicon glyphicon-th-list" data-toggle="dropdown" role="button"
                            aria-expanded="false"> Анкети<span class="caret"></span></a>
@@ -66,6 +57,8 @@
                             </li>
                         </ul>
                     </li>
+                    <li>@Html.ActionLink(" За нас", "About", "Home", new { area = "" }, new { @class = "glyphicon glyphicon-info-sign" })</li>
+                    <li>@Html.ActionLink(" Контакти", "Contact", "Home", new { area = "" }, new { @class = "glyphicon glyphicon-envelope" })</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -83,5 +76,18 @@
         @Scripts.Render("~/bundles/jquery")
         @Scripts.Render("~/bundles/bootstrap")
         @RenderSection("scripts", required: false)
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(window).on('scroll', function (e) {
+                if ($(document).scrollTop() === 0) {
+                    $('.navbar').css('opacity', 1);
+                }
+                else {
+                    $('.navbar').css('opacity', (1 - $(document).scrollTop() / 500));
+                }
+            });
+        });
+    </script>
 </body>
 </html>

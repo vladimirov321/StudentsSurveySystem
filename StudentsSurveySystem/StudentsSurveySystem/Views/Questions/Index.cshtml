@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
 }
 <style>
-    #sendBtn:hover{
+    .sendBtn:hover{
         background-color: green;
     }
     #statsbtn{
@@ -12,6 +12,9 @@
     }
     #statsbtn:hover{
         background-color:green;
+    }
+    .message:hover{
+        opacity:0.5;
     }
 </style>
 
@@ -80,7 +83,7 @@
                 @if (this.User.IsInRole("Admin"))
                 {
                     <td>
-                        <span class="btn btn-default" id="statsbtn">@Html.ActionLink("Stats", "Stats", new { questionID = item.ID })</span>
+                        <span class="btn btn-default" id="statsbtn">@Html.ActionLink("Статистика", "Stats", new { questionID = item.ID })</span>
                     </td>
                 }
 </tr>
@@ -90,14 +93,24 @@
 
     if(ViewBag.CanEnroll == false)
     {
-        <p>Вече сте попълнили тази анкета</p>
+        <div class="alert alert-danger message"><strong> Вече сте попълнили тази анкета</strong></div>
         <input type="submit" value="Изпрати" class="btn btn-default" disabled/>
+        <input type="submit" value="Обратно към анкети" class="btn btn-default go_back sendBtn" />
     }
     else
     {
         if (this.User.IsInRole("Admin") == false)
         {
-            <input type="submit" value="Изпрати" class="btn btn-default" id="sendBtn" onclick="return confirm('Сигурни ли сте, че искате да изпратите тази анкета?');return false;" />
+            <input type="submit" value="Изпрати" class="btn btn-default sendBtn" onclick="return confirm('Сигурни ли сте, че искате да изпратите тази анкета?');return false;" />
         }
     }
 }
+
+<script type="text/javascript">
+    $(function () {
+        $('.go_back').click(function (e) {
+            e.preventDefault();
+            history.go(-1);
+        });
+    });
+</script>

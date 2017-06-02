@@ -241,6 +241,8 @@
     <Content Include="Content\Images\1.jpg" />
     <Content Include="Content\Images\2.jpg" />
     <Content Include="Content\Images\3.jpg" />
+    <Content Include="Content\Images\ami.jpg" />
+    <Content Include="Content\Images\ru.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
