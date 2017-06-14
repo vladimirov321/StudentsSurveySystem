@@ -62,9 +62,5 @@ namespace StudentsSurveySystem.Models
         public Gender? Gender { get; set; }
 
         public virtual ICollection<Enrollment> Enrollments { get; set; }
-
-        //public virtual ApplicationUser User { get; set; }
-        //[Required]
-        //public string ApplicationUserId { get; set; }
     }
 }
